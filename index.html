@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VICHAAR // Birthday Arcade Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@700&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Fullscreen Confetti Canvas -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Subtle Retro Arcade Grid & Floating Stickers Background -->
+  <div class="arcade-bg" aria-hidden="true">
+    <div class="arcade-grid"></div>
+    <span class="float-sticker s1">🎤</span>
+    <span class="float-sticker s2">⚡</span>
+    <span class="float-sticker s3">🎂</span>
+    <span class="float-sticker s4">🏔️</span>
+    <span class="float-sticker s5">💿</span>
+    <span class="float-sticker s6">🔥</span>
+  </div>
+
+  <!-- =========================================================
+       1. TOP SECRET BIRTHDAY VAULT (LOCK SCREEN)
+       ========================================================= -->
+  <section id="vault-screen" class="vault-screen" aria-label="Top Secret Birthday Vault">
+    <div class="vault-card">
+      <div class="vault-top-bar">
+        <span class="blink-dot"></span>
+        <span class="pixel-label">SECURITY CLEARANCE // LEVEL 01</span>
+        <button id="vault-mute-btn" class="mini-sound-btn" type="button" aria-label="Toggle sound effects">
+          🔊 SFX: ON
+        </button>
+      </div>
+
+      <div class="vault-emblem">
+        <div class="padlock-icon" id="padlock-icon">🔒</div>
+        <div class="vault-title-wrap">
+          <p class="arcade-kicker">DOON CITY ARCHIVES PRESENTS</p>
+          <h1 class="vault-title">TOP SECRET<br />BIRTHDAY VAULT</h1>
+        </div>
+      </div>
+
+      <div class="vault-progress">
+        <span class="pixel-label" id="vault-step-label">RIDDLE 1 OF 2</span>
+        <div class="progress-pills">
+          <span class="pill active" id="pill-1"></span>
+          <span class="pill" id="pill-2"></span>
+        </div>
+      </div>
+
+      <div class="riddle-box">
+        <p id="riddle-question" class="riddle-question"></p>
+        <div id="riddle-options" class="riddle-options"></div>
+      </div>
+
+      <div id="vault-feedback" class="vault-feedback" role="status" aria-live="polite"></div>
+
+      <div class="vault-footer-actions">
+        <button id="vault-hint-btn" class="arcade-btn btn-yellow btn-sm" type="button">
+          💡 PEEK HINT
+        </button>
+        <span class="pixel-sub">FOR: VICHAAR // FROM: VAISHNAVI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       MAIN BIRTHDAY ARCADE EXPERIENCE (UNLOCKED)
+       ========================================================= -->
+  <div id="party-app" class="party-app hidden">
+    <!-- Sticky Arcade HUD -->
+    <header class="arcade-hud">
+      <div class="hud-left">
+        <span class="hud-badge">🕹️ P1: VICHAAR</span>
+        <span class="hud-score">HYPE: <strong id="hype-score">100</strong></span>
+      </div>
+
+      <nav class="hud-nav" aria-label="Birthday sections">
+        <a href="#cake-section" class="hud-pill">🎂 Cake</a>
+        <a href="#wheel-section" class="hud-pill">🎡 Wheel</a>
+        <a href="#gallery-section" class="hud-pill">📸 Memes</a>
+        <a href="#decree-section" class="hud-pill">📜 Decree</a>
+      </nav>
+
+      <div class="hud-right">
+        <button id="confetti-btn" class="hud-icon-btn" type="button" title="Launch confetti!">🎉</button>
+        <button id="mute-btn" class="hud-sound-btn" type="button" aria-label="Toggle sound effects">
+          🔊 ON
+        </button>
+        <button id="relock-btn" class="hud-icon-btn" type="button" title="Re-lock Birthday Vault">🔒</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- HERO BANNER -->
+      <section class="hero-section card-pop">
+        <div class="hero-content">
+          <div class="ticker-tape">
+            <span>⚡ ILAAKA DOON CITY ⚡ FAST FLOWS ⚡ HINDI × ENGLISH BARS ⚡ BIRTHDAY LEVEL UP ⚡</span>
+          </div>
+          <div class="hero-grid">
+            <div class="hero-text">
+              <span class="arcade-tag tag-pink">INSERT BIRTHDAY COIN 🪙</span>
+              <h1 class="hero-title">
+                HAPPY<br />
+                BIRTHDAY<br />
+                <span class="highlight-cyan">VICHAAR!</span>
+              </h1>
+              <p class="hero-sub">
+                From the misty streets of <strong>Dehradun, Uttarakhand</strong> to tearing up mics with
+                warp-speed Hindi-English wordplay—today the arcade belongs to you!
+              </p>
+              <div class="hero-stats">
+                <div class="stat-chip bg-yellow">
+                  <span class="stat-label">ORIGIN</span>
+                  <span class="stat-val">DOON CITY 🏔️</span>
+                </div>
+                <div class="stat-chip bg-cyan">
+                  <span class="stat-label">FLOW SPEED</span>
+                  <span class="stat-val">999 BPM ⚡</span>
+                </div>
+                <div class="stat-chip bg-lime">
+                  <span class="stat-label">WORDPLAY</span>
+                  <span class="stat-val">HINDLISH PRO 🎤</span>
+                </div>
+              </div>
+              <div class="hero-cta-row">
+                <a href="#cake-section" class="arcade-btn btn-pink">🎂 BLOW THE CANDLES</a>
+                <a href="#wheel-section" class="arcade-btn btn-yellow">🎡 SPIN THE WHEEL</a>
+              </div>
+            </div>
+
+            <div class="hero-portrait-wrap">
+              <div class="portrait-frame">
+                <img
+                  src="assets/photo-1-pink-hoodie.jpg"
+                  alt="Vichaar in bright pink Pitlane Squad hoodie and sunglasses"
+                  class="hero-portrait"
+                />
+                <span class="sticker-badge badge-top">🏆 B-DAY BOSS</span>
+                <span class="sticker-badge badge-bottom">DRIP: 100/10</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           2. INTERACTIVE BIRTHDAY CAKE (CLICK OR BLOW INTO MIC)
+           ========================================================= -->
+      <section id="cake-section" class="section-block card-pop bg-cream">
+        <div class="section-header">
+          <span class="arcade-tag tag-cyan">STAGE 01 // MAKE A WISH</span>
+          <h2 class="section-title">BLOW OUT THE CANDLES</h2>
+          <p class="section-desc">
+            Use your real mic to blow out the flames like a true breath-control rapper—or tap the candles / button below!
+          </p>
+        </div>
+
+        <div class="cake-stage">
+          <!-- Mic Breath Meter -->
+          <div class="mic-panel">
+            <div class="mic-meter-header">
+              <span class="pixel-label dark">🎙️ BREATH-O-METER</span>
+              <span id="mic-status-text" class="mic-status">MIC: STANDBY</span>
+            </div>
+            <div class="meter-track">
+              <div id="mic-meter-fill" class="meter-fill"></div>
+            </div>
+          </div>
+
+          <!-- Interactive Retro Cake -->
+          <div class="cake-wrapper" id="cake-wrapper">
+            <div class="candles-row" id="candles-row" role="group" aria-label="Birthday candles">
+              <!-- 5 Candles injected / interactive -->
+              <button class="candle" data-candle="0" type="button" aria-label="Candle 1">
+                <span class="flame"></span>
+                <span class="smoke"></span>
+                <span class="wick"></span>
+                <span class="wax wax-pink"></span>
+              </button>
+              <button class="candle" data-candle="1" type="button" aria-label="Candle 2">
+                <span class="flame"></span>
+                <span class="smoke"></span>
+                <span class="wick"></span>
+                <span class="wax wax-cyan"></span>
+              </button>
+              <button class="candle" data-candle="2" type="button" aria-label="Candle 3">
+                <span class="flame"></span>
+                <span class="smoke"></span>
+                <span class="wick"></span>
+                <span class="wax wax-yellow"></span>
+              </button>
+              <button class="candle" data-candle="3" type="button" aria-label="Candle 4">
+                <span class="flame"></span>
+                <span class="smoke"></span>
+                <span class="wick"></span>
+                <span class="wax wax-lime"></span>
+              </button>
+              <button class="candle" data-candle="4" type="button" aria-label="Candle 5">
+                <span class="flame"></span>
+                <span class="smoke"></span>
+                <span class="wick"></span>
+                <span class="wax wax-pink"></span>
+              </button>
+            </div>
+
+            <div class="cake-tier tier-top">
+              <div class="icing-drip"></div>
+              <div class="sprinkles"></div>
+              <span class="cake-plaque">VICHAAR ★ DOON</span>
+            </div>
+            <div class="cake-tier tier-mid">
+              <div class="icing-drip drip-cyan"></div>
+              <div class="pixel-checker"></div>
+            </div>
+            <div class="cake-tier tier-base">
+              <div class="icing-drip drip-yellow"></div>
+            </div>
+            <div class="cake-plate"></div>
+          </div>
+
+          <div id="wish-banner" class="wish-banner hidden" role="status" aria-live="polite">
+            ✨ WISH LOCKED IN! MAY YOUR BARS STAY SHARP &amp; YOUR MOMOS STAY HOT! ✨
+          </div>
+
+          <div class="cake-controls">
+            <button id="enable-mic-btn" class="arcade-btn btn-cyan" type="button">
+              🎤 BLOW WITH MIC
+            </button>
+            <button id="blow-click-btn" class="arcade-btn btn-pink" type="button">
+              💨 CLICK TO BLOW CANDLE
+            </button>
+            <button id="relight-btn" class="arcade-btn btn-yellow hidden" type="button">
+              🔥 RELIGHT CANDLES
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           3. SPIN THE BIRTHDAY WHEEL MINI-GAME
+           ========================================================= -->
+      <section id="wheel-section" class="section-block card-pop bg-violet-card">
+        <div class="section-header light">
+          <span class="arcade-tag tag-yellow">STAGE 02 // BONUS MINI-GAME</span>
+          <h2 class="section-title text-white">SPIN THE BIRTHDAY WHEEL</h2>
+          <p class="section-desc text-light">
+            Test your luck on the Doon Arcade Wheel—win free coupons, hilarious freestyle dares, or certified roasts &amp; toasts!
+          </p>
+        </div>
+
+        <div class="wheel-layout">
+          <div class="wheel-stage">
+            <div id="wheel-pointer" class="wheel-pointer" aria-hidden="true">▼</div>
+            <div class="wheel-bezel">
+              <canvas id="wheel-canvas" width="420" height="420" aria-label="Birthday prize wheel"></canvas>
+            </div>
+            <button id="spin-btn" class="arcade-btn btn-yellow btn-lg spin-cta" type="button">
+              🎰 SPIN THE WHEEL!
+            </button>
+          </div>
+
+          <div class="wheel-result-panel">
+            <div id="wheel-result-card" class="wheel-result-card">
+              <span id="result-type-badge" class="arcade-tag tag-lime">READY TO PLAY</span>
+              <h3 id="result-title" class="result-title">HIT SPIN TO ROLL!</h3>
+              <p id="result-desc" class="result-desc">
+                8 slices of birthday chaos await: Dehradun momo coupons, rapid-fire rap dares, and birthday roasts.
+              </p>
+              <div class="result-meta">
+                <span>SPINS: <strong id="spin-count">0</strong></span>
+              </div>
+            </div>
+
+            <div class="stash-box">
+              <p class="pixel-label">🎒 UNLOCKED BIRTHDAY LOOT</p>
+              <ul id="loot-list" class="loot-list">
+                <li class="loot-empty">No spins yet—give it a whirl!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           4. PHOTO / MEME GALLERY
+           ========================================================= -->
+      <section id="gallery-section" class="section-block card-pop bg-cream">
+        <div class="section-header">
+          <span class="arcade-tag tag-pink">STAGE 03 // THE ARCHIVES</span>
+          <h2 class="section-title">VICHAAR MEME &amp; DRIP GALLERY</h2>
+          <p class="section-desc">
+            Tap any card to zoom in, drop reactions, and appreciate the sheer range from MTV Hustle stage bars to red-coat equestrian energy.
+          </p>
+        </div>
+
+        <div id="meme-grid" class="meme-grid">
+          <!-- Cards populated cleanly from app.js -->
+        </div>
+      </section>
+
+      <!-- =========================================================
+           5. FINAL 'OFFICIAL BIRTHDAY DECREE' CARD SIGNED BY VAISHNAVI
+           ========================================================= -->
+      <section id="decree-section" class="section-block card-pop decree-shell">
+        <div class="decree-card" id="decree-card">
+          <div class="decree-border-inner">
+            <div class="decree-top-row">
+              <span class="pixel-label">ROYAL ARCHIVE NO. DOON-27-VIP</span>
+              <span class="arcade-tag tag-yellow">OFFICIAL PROCLAMATION</span>
+            </div>
+
+            <h2 class="decree-title">OFFICIAL BIRTHDAY DECREE</h2>
+            <p class="decree-subtitle">BY ORDER OF THE BIRTHDAY COMMITTEE OF DEHRADUN &amp; BEYOND</p>
+
+            <div class="decree-body">
+              <p>
+                Be it hereby known across every mic check, late-night cypher, and corner of
+                <strong>Ilaaka Doon City</strong> that today marks the official Level-Up Day of
+                <strong class="decree-name">VICHAAR</strong> — Grand Marshal of Fast Flows,
+                Architect of Hindi-English Wordplay, and Undisputed King of Main-Character Fits.
+              </p>
+
+              <ul class="decree-clauses">
+                <li>
+                  <span>🎤</span>
+                  <strong>Clause I (Flow Immunity):</strong> Granted unlimited double-time verses and zero breathlessness—even after eating extra birthday cake.
+                </li>
+                <li>
+                  <span>🥟</span>
+                  <strong>Clause II (Doon Feast Tax):</strong> Entitled to priority access to hot Dehradun momos, celebratory treats, and zero calorie counting for 24 hours.
+                </li>
+                <li>
+                  <span>🕶️</span>
+                  <strong>Clause III (Shades Anytime):</strong> Officially authorized to wear sunglasses indoors, outdoors, at midnight, or next to a horse without explanation.
+                </li>
+                <li>
+                  <span>🏆</span>
+                  <strong>Clause IV (Year Ahead):</strong> Manifesting sold-out stages, chart-topping tracks, and unstoppable happiness all year long.
+                </li>
+              </ul>
+            </div>
+
+            <div class="decree-stamp-zone">
+              <div id="official-stamp" class="official-stamp hidden" aria-hidden="true">
+                <span>VERIFIED ★ DOON KING</span>
+                <small>BIRTHDAY SEALED</small>
+              </div>
+            </div>
+
+            <div class="decree-footer">
+              <div class="decree-date-box">
+                <span class="pixel-label">ISSUED ON</span>
+                <p class="decree-date">NOVEMBER 27, 2026</p>
+              </div>
+
+              <button id="stamp-decree-btn" class="arcade-btn btn-pink" type="button">
+                🖋️ STAMP &amp; SEAL DECREE
+              </button>
+
+              <div class="signature-box">
+                <span class="pixel-label">SIGNED &amp; APPROVED BY</span>
+                <p class="signature-handwriting">Vaishnavi</p>
+                <span class="signature-line"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="arcade-footer">
+      <p>MADE WITH 💛 &amp; 8-BIT ENERGY FOR <strong>VICHAAR</strong> • SIGNED BY <strong>VAISHNAVI</strong></p>
+      <p class="footer-sub">PRESS PLAY • SPIT BARS • STAY ICONIC • ILAAKA DOON CITY</p>
+    </footer>
+  </div>
+
+  <!-- Lightbox Modal for Gallery -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lightbox-card">
+      <button id="lb-close" class="lb-close" type="button" aria-label="Close photo">✕</button>
+      <img id="lb-img" src="" alt="" class="lb-img" />
+      <div class="lb-caption-box">
+        <span id="lb-tag" class="arcade-tag tag-cyan"></span>
+        <h3 id="lb-title" class="lb-title"></h3>
+        <p id="lb-caption" class="lb-caption"></p>
+      </div>
+      <div class="lb-nav">
+        <button id="lb-prev" class="arcade-btn btn-yellow btn-sm" type="button">◀ PREV</button>
+        <button id="lb-next" class="arcade-btn btn-yellow btn-sm" type="button">NEXT ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
